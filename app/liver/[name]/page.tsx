@@ -1,5 +1,13 @@
 import React from 'react'
-import { getVideos } from '@/lib/db'
+
+async function getVideos() {
+  const res = await fetch('http://localhost:3000/api/videos')
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
+
+  return res.json()
+}
 
 export default async function Page() {
   const { items = [] } = await getVideos()
