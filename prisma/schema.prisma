@@ -1,0 +1,23 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Liver {
+  id             Int    @id @default(autoincrement())
+  channelId      String @unique @db.VarChar(24)
+  slug           String @unique @db.VarChar(20)
+  name           String @db.VarChar(20)
+  enName         String @db.VarChar(20)
+  avatar         String
+  linkTwitter    String
+  linkYoutube    String
+  colorHighlight String @db.VarChar(7)
+  colorMain      String @db.VarChar(7)
+}

@@ -1,13 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { Pool } from 'pg'
-
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'oshi-calendar',
-  password: process.env.DB_PASSWORD,
-  port: 5432,
-})
+import { prisma } from '@/lib/prisma'
 
 export async function GET(request: NextRequest) {
   // const secret = request.nextUrl.searchParams.get('secret')
@@ -22,9 +14,9 @@ export async function GET(request: NextRequest) {
   // }
 
   try {
-    const res = await pool.query('SELECT * FROM livers')
+    const res = await prisma.liver.findMany()
     return NextResponse.json({
-      livers: res.rows,
+      livers: res,
     })
   } catch (e) {
     throw e
