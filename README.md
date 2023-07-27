@@ -1,4 +1,14 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# oshi-calendar
+
+Try to analyze my oshi's calendar.
+
+v1: NIJISANJI EN livers' streaming heatmap calendar.
+- [livers data](https://www.nijisanji.jp/talents)(nijisanji's official API)
+- [youtube API](https://github.com/LuanRT/YouTube.js)
+
+v2(?): maybe 2.5 actors?(need maintain data manually), or other youtubers
+
+> This project is my practice of Next.js/React.js/Full-stack development, and here's my [note](./note.md).
 
 ## Getting Started
 
