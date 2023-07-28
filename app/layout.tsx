@@ -14,11 +14,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen flex flex-col">
+    <html suppressHydrationWarning>
+      <body className="flex min-h-screen flex-col">
         <Providers>
           <Header />
-          <div className="hero flex-auto bg-base-200">{children}</div>
+          <div className="hero flex-auto bg-primary-content text-primary">
+            {children}
+          </div>
           <Footer />
         </Providers>
       </body>

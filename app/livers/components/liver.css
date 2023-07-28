@@ -1,0 +1,8 @@
+.liver.card:hover {
+  background-color: var(--liver-highlight-color);
+  color: hsl(var(--ac));
+}
+
+.liver.card > .avatar > .rounded-full {
+  background-color: var(--liver-main-color);
+}

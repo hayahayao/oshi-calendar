@@ -3,20 +3,18 @@ import ThemeChanger from './ThemeChanger'
 
 export default function Header() {
   return (
-    <div className="navbar bg-neutral text-neutral-content">
-      {/* TODO: link hover default style? */}
-      <Link href="/" className="flex-1">
-        <div className="flex-none">
-          <button className="btn btn-square btn-ghost">
-            <i className="nes-icon heart"></i>
-          </button>
-        </div>
-        <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl font-mono">
-            Oshi Calendar | 推しカレンダー
-          </a>
-        </div>
-      </Link>
+    <div className="navbar bg-primary text-primary-content font-mono">
+      <div className="flex-none">
+        <Link href="/" className="btn btn-square btn-ghost">
+          <i className="nes-icon heart"></i>
+        </Link>
+      </div>
+      <div className="flex-1">
+        <Link href="/" className="btn btn-ghost normal-case text-xl">
+          Oshi Calendar | 推しカレンダー
+        </Link>
+      </div>
+
       <div className="flex-none justify-center">
         <ThemeChanger />
         <div className="divider"></div>

@@ -13,7 +13,7 @@ export default function ThemeChanger() {
       {/* this hidden checkbox controls the state */}
       <input
         type="checkbox"
-        checked={theme !== 'dracula'}
+        checked={theme !== 'autumn'}
         onChange={switchTheme}
       />
 

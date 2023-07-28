@@ -1,32 +1,36 @@
+import './liver.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Liver } from '@prisma/client'
 
 export default function LiverCard({ liver }: { liver: Liver }) {
   return (
-    <Link href={`/livers/${liver.slug}`}>
-      {/* Arbitrary values cannot be computed from dynamic values */}
-      {/* https://v2.tailwindcss.com/docs/just-in-time-mode#all-variants-are-enabled */}
-      {/* TODO: hover */}
+    <Link
+      href={`/livers/${liver.slug}`}
+      prefetch={false}
+      passHref
+      legacyBehavior
+    >
       <div
-        className="card lg:card-side w-50 bg-base-100 shadow-xl"
-        style={{ backgroundColor: liver.colorHighlight }}
+        className="liver w-50 card cursor-pointer bg-neutral text-neutral-content shadow-xl lg:card-side"
+        style={{
+          '--liver-main-color': liver.colorMain,
+          '--liver-highlight-color': liver.colorHighlight,
+        }}
       >
-        <figure className="avatar w-40 h-40 m-5 rounded-xl">
+        <div className="avatar m-5 h-40 w-40">
           <Image
+            className="rounded-full ring ring-neutral-content"
             src={liver.avatar}
             width={400}
             height={400}
             alt={liver.enName}
           />
-        </figure>
-        <div className="card-body p-4">
-          <p className="card-title font-mono text-base whitespace-pre">
-            {liver.enName}
-          </p>
-          <p className="card-title font-mono text-base whitespace-pre">
-            {liver.name}
-          </p>
+        </div>
+        <div className="card-body items-center justify-items-center p-5 m-auto">
+          <div className="card-title text-base text-center">
+            {liver.enName} <br /> {liver.name}
+          </div>
         </div>
       </div>
     </Link>
