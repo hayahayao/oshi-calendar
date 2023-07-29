@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@google-cloud/local-auth": "^2.1.1",
     "@prisma/client": "^5.0.0",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
@@ -19,20 +18,23 @@
     "dayjs": "^1.11.9",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
-    "googleapis": "^118.0.0",
     "nes.css": "^2.3.0",
     "next": "13.4.1",
     "next-themes": "^0.2.1",
+    "ofetch": "^1.1.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.2"
+    "tailwindcss": "3.3.2",
+    "youtubei.js": "^5.7.1",
+    "yt-channel-info": "^3.2.1"
   },
   "devDependencies": {
     "@types/node": "^20.4.4",
     "daisyui": "^3.5.0",
     "encoding": "^0.1.13",
     "git-cz": "^4.9.0",
+    "https-proxy-agent": "^7.0.1",
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "prisma": "^5.0.0",

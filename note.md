@@ -2,6 +2,13 @@
 
 > some notes.
 
+## React/Typescript
+
+### Inline style with css var
+
+ts warning: `React.CSSProperties`
+- ref: https://reacthustle.com/blog/how-to-set-inline-styles-in-react-typescript
+
 ## Next.js
 
 ### cache
@@ -14,9 +21,12 @@
 
 便利な機能！
 
-### Text content does not match server-rendered HTML
+### Error: hydration
 
-https://nextjs.org/docs/messages/react-hydration-error
+[Official doc](https://nextjs.org/docs/messages/react-hydration-error)
+
+when using next-themes with nextjs13: apply `suppressHydrationWarning` to `<html>`
+- ref: https://github.com/pacocoursey/next-themes/issues/169
 
 ## Prisma
 
@@ -27,7 +37,9 @@ Basic flow:
 
 ### seed
 
-Use a csv file as seed: `csvtojson` and `prisma.createMany` API. [code](./prisma/seed.ts)
+[code](./prisma/seed.ts)
+
+Use a csv file as seed: `csvtojson` and `prisma.createMany` API.
 
 ### PrismaClient
 
@@ -39,11 +51,15 @@ Use a csv file as seed: `csvtojson` and `prisma.createMany` API. [code](./prisma
 
 [Official doc](https://tailwindcss.com/docs/adding-custom-styles#using-arbitrary-values)
 
+Dynamic variable in js not always working, use inline style + css var
+- https://stackoverflow.com/questions/70584680/problem-with-arbitrary-values-on-tailwind-with-react
+- https://stackoverflow.com/questions/28365233/inline-css-styles-in-react-how-to-implement-ahover
+
 ## Others
 
 ### Auth error: ETIMEDOUT
 
-[issue](https://github.com/googleapis/google-auth-library-nodejs/issues/283)
-
 set HTTP_PROXY & HTTPS_PROXY
+- [issue](https://github.com/googleapis/google-auth-library-nodejs/issues/283)
+
 

@@ -1,15 +1,14 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { google, youtube_v3 } from 'googleapis'
-import * as dayjs from 'dayjs'
+import { Innertube, YTNodes } from 'youtubei.js'
+import { fetch, ProxyAgent } from 'undici'
 
-const youtube: youtube_v3.Youtube = google.youtube({
-  version: 'v3',
-  auth: process.env.GOOGLE_API_KEY,
-})
+// export const revalidate = 0
+
+const httpsAgent = new ProxyAgent(process.env.HTTPS_PROXY)
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { slug: string } }
 ) {
   try {
@@ -19,17 +18,40 @@ export async function GET(
       },
     })
 
-    const time = dayjs().subtract(3, 'month').toISOString()
+    if (!liver) {
+      throw new Error('Get liver info Error')
+    }
 
-    // TODO: polling to get totalResults
-    const ytbData = await youtube.search.list({
-      part: ['snippet'],
-      order: 'date',
-      publishedAfter: time,
-      channelId: liver.channelId,
+    const yt = await Innertube.create({
+      generate_session_locally: true,
+      fetch: (input, init) => {
+        // input.duplex = 'half'
+        return fetch(input, {
+          ...init,
+          dispatcher: httpsAgent,
+        })
+      },
     })
-    return NextResponse.json(ytbData.data)
+
+    const channelId = liver.channelId
+
+    const channel = await yt.getChannel(channelId)
+
+    const streamsInfo = await channel.getLiveStreams()
+    const streams = streamsInfo.videos
+
+    const res = streams.map((i) => ({
+      title: i.title.toString(),
+      published: i.published.toString(),
+      duration: i.duration.seconds,
+    }))
+    console.log('==== ', res)
+
+    return NextResponse.json({
+      streams: res,
+    })
   } catch (e) {
-    throw e
+    console.error(e)
+    NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

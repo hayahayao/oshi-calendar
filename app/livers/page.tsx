@@ -1,14 +1,22 @@
-import Link from 'next/link'
 import type { Liver } from '@prisma/client'
 import LiverCard from './components/LiverCard'
 
-async function getLivers() {
+type ResponseData = {
+  livers: Liver[]
+}
+
+async function getLivers(): Promise<ResponseData> {
   const res = await fetch('http://localhost:3000/api/livers')
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
+
   return res.json()
 }
 
 export default async function Page() {
-  const { livers = [] }: { livers: Liver[] } = await getLivers()
+  const { livers } = await getLivers()
   return (
     <div className="hero-content text-center">
       <div className="font-mono">

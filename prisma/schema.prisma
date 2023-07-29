@@ -20,4 +20,6 @@ model Liver {
   linkYoutube    String
   colorHighlight String @db.VarChar(7)
   colorMain      String @db.VarChar(7)
+
+  @@index([slug])
 }
