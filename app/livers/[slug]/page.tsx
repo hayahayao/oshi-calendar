@@ -1,5 +1,5 @@
 import React from 'react'
-import { YTNodes } from 'youtubei.js'
+import Heatmap from './components/Heatmap'
 
 // type ResponseData = {
 //   streams: YTNodes.Video[]
@@ -18,16 +18,16 @@ async function getVideos(slug: string) {
 export const revalidate = 0
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const { streams = [] } = await getVideos(params.slug)
+  const { liver, streams } = await getVideos(params.slug)
+  const calendarData = streams.map((stream) => ({
+    key: new Date(stream.published),
+    data: stream.duration,
+  }))
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      {streams.map((val) => (
-        <div key={`${val.title}`} className="flex w-full">
-          <p>{val.title}</p>
-          <p>{val.published}</p>
-          <p>{val.duration}</p>
-        </div>
-      ))}
+    <div className="flex">
+      {calendarData.length}
+      <Heatmap data={calendarData}></Heatmap>
     </div>
   )
 }

@@ -1,9 +1,11 @@
+// @ts-nocheck
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { Innertube, YTNodes } from 'youtubei.js'
+import { Innertube } from 'youtubei.js'
 import { fetch, ProxyAgent } from 'undici'
+import * as dayjs from 'dayjs'
 
-// export const revalidate = 0
+export const revalidate = 60 * 60 * 24
 
 const httpsAgent = new ProxyAgent(process.env.HTTPS_PROXY)
 
@@ -23,9 +25,9 @@ export async function GET(
     }
 
     const yt = await Innertube.create({
+      // cache: new UniversalCache(false),
       generate_session_locally: true,
       fetch: (input, init) => {
-        // input.duplex = 'half'
         return fetch(input, {
           ...init,
           dispatcher: httpsAgent,
@@ -33,25 +35,33 @@ export async function GET(
       },
     })
 
-    const channelId = liver.channelId
-
-    const channel = await yt.getChannel(channelId)
+    const channel = await yt.getChannel(liver.channelId)
 
     const streamsInfo = await channel.getLiveStreams()
     const streams = streamsInfo.videos
 
-    const res = streams.map((i) => ({
+    const resData = streams.map((i) => ({
       title: i.title.toString(),
-      published: i.published.toString(),
       duration: i.duration.seconds,
+      origin_video: i,
     }))
-    console.log('==== ', res)
+
+    // get start_timestamp
+    const basicInfos = await Promise.all(
+      streams.map((video) => {
+        return Promise.resolve(yt.getBasicInfo(video.id))
+      })
+    )
+    basicInfos.forEach((info, i) => {
+      resData[i].origin_info = info
+      resData[i].published = info.basic_info.start_timestamp
+    })
 
     return NextResponse.json({
-      streams: res,
+      liver,
+      streams: resData,
     })
   } catch (e) {
-    console.error(e)
     NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
