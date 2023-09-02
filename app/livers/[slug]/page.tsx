@@ -3,6 +3,7 @@ import type { Liver } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import Image from 'next/image'
 import Link from 'next/link'
+import Loading from '@/app/components/Loading'
 
 const Heatmap = React.lazy(() => import('./components/Heatmap'))
 
@@ -44,13 +45,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <i className="nes-icon twitter"></i>
           </Link>
         </div>
-        <React.Suspense
-          fallback={
-            <span className="mt-10 loading loading-ring loading-lg"></span>
-          }
-        >
-          <Heatmap liver={liver}></Heatmap>
-        </React.Suspense>
+        <div className="mt-10">
+          <React.Suspense fallback={<Loading />}>
+            <Heatmap liver={liver}></Heatmap>
+          </React.Suspense>
+        </div>
       </div>
     </div>
   )

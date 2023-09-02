@@ -1,5 +1,5 @@
 // @ts-nocheck
-'use client'
+// 'use client'
 import { NextRequest, NextResponse } from 'next/server'
 import { Innertube, UniversalCache } from 'youtubei.js'
 import { fetch, ProxyAgent } from 'undici'
