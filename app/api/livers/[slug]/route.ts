@@ -1,9 +1,9 @@
 // @ts-nocheck
+'use client'
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { Innertube, UniversalCache } from 'youtubei.js'
 import { fetch, ProxyAgent } from 'undici'
-import * as dayjs from 'dayjs'
 
 export const revalidate = 60 * 60 * 24
 
@@ -45,7 +45,7 @@ export async function GET(
       streams = streams.concat(continuation.videos)
     }
 
-    const resData = streams.map((i) => ({
+    const resData: Stream[] = streams.map((i) => ({
       title: i.title.toString(),
       duration: i.duration.seconds,
       // origin_video: i,
@@ -68,6 +68,9 @@ export async function GET(
     })
   } catch (e) {
     console.error(e)
-    NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    )
   }
 }

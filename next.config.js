@@ -19,6 +19,14 @@ const nextConfig = {
       },
     ],
   },
+  // webpack: (
+  //   config,
+  //   { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+  // ) => {
+  //   config.plugins.push(new webpack.IgnorePlugin(/canvas|jsdom/, /konva/))
+  //   // Important: return the modified config
+  //   return config
+  // },
 }
 
 module.exports = nextConfig
