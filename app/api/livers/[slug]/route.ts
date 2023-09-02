@@ -1,7 +1,6 @@
 // @ts-nocheck
 'use client'
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
 import { Innertube, UniversalCache } from 'youtubei.js'
 import { fetch, ProxyAgent } from 'undici'
 
@@ -14,15 +13,7 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   try {
-    const liver = await prisma.liver.findUnique({
-      where: {
-        slug: params.slug,
-      },
-    })
-
-    if (!liver) {
-      throw new Error('Get liver info Error')
-    }
+    const channelId = params.slug
 
     const yt = await Innertube.create({
       cache: new UniversalCache(true, process.cwd() + '/.cache'),
@@ -35,7 +26,7 @@ export async function GET(
       },
     })
 
-    const channel = await yt.getChannel(liver.channelId)
+    const channel = await yt.getChannel(channelId)
 
     let continuation = await channel.getLiveStreams()
     let streams = continuation.videos
@@ -63,7 +54,6 @@ export async function GET(
     })
 
     return NextResponse.json({
-      liver,
       streams: resData,
     })
   } catch (e) {

@@ -36,7 +36,7 @@ export default async function Page() {
         <h1 className="mt-10 text-2xl">NIJISANJI EN</h1>
         <div className="mt-10 mb-10 grid grid-cols-3 gap-6">
           {livers.map((liver) => (
-            <LiverCard key={liver.id} liver={liver}></LiverCard>
+            <LiverCard key={liver.id} liver={liver} />
           ))}
         </div>
       </div>
