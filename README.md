@@ -10,6 +10,12 @@ v2(?): maybe 2.5 actors?(need maintain data manually), or other youtubers
 
 > This project is my practice of Next.js/React.js/Full-stack development, and here's my [note](./note.md).
 
+![index](./img/index.png)
+
+![livers](./img/livers.png)
+
+![sonny](./img/sonny.png)
+
 ## Getting Started
 
 First, run the development server:
